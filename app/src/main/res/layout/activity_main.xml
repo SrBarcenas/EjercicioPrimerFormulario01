@@ -79,7 +79,7 @@
         android:id="@+id/cbTermsConditions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Acepto los términos y condiodiones" />
+        android:text="Acepto los términos y condiciones" />
 
     <TextView
         android:id="@+id/tvErrorTermsConditions"

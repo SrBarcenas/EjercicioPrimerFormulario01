@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
@@ -28,54 +27,59 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var context = this
+
         setUI()
         listener()
 
         etName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 tvErrorName.visibility = View.GONE
-                Log.d("Prueba", "beforeTextChanged")
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                Log.d("Prueba", "onTextChanged")
 
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                Log.d("Prueba", "afterTextChanged")
             }
         })
 
         etEmail.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 tvErrorEmail.visibility = View.GONE
-                Log.d("Prueba", "beforeTextChanged")
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                Log.d("Prueba", "onTextChanged")
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                Log.d("Prueba", "onTextChanged")
             }
 
         })
 
-        etpPassword.addTextChangedListener(object : TextWatcher{
+        etpPassword.addTextChangedListener(object  : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 tvErrorPassword.visibility = View.GONE
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
             }
 
             override fun afterTextChanged(p0: Editable?) {
+
             }
 
-
         })
+
+
+        cbTermsConditions.setOnCheckedChangeListener {buttonView, isChecked ->
+            if(isChecked){
+                tvErrorTermsConditions.visibility = View.GONE
+            }
+        }
+
     }
 
     private fun setUI(){
@@ -97,24 +101,48 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun validate(){
+        if(validateName() && validateEmail() && validatePassword() && validateTermsConditions()){
+            Toast.makeText(baseContext, "Los datos se han guardado correctamente", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun validateName(): Boolean{
         if(etName.text.isEmpty()){
             tvErrorName.visibility = View.VISIBLE
             tvErrorName.text = "Nombre vacío"
+            return false
+        }else{
+            return true
         }
+    }
 
+    private fun validateEmail(): Boolean{
         if(etEmail.text.isEmpty()){
             tvErrorEmail.visibility = View.VISIBLE
             tvErrorEmail.text = "Correo vacío"
+            return false
+        }else{
+            return true
         }
+    }
 
+    private fun validatePassword(): Boolean{
         if(etpPassword.text.isEmpty()){
             tvErrorPassword.visibility = View.VISIBLE
             tvErrorPassword.text = "Contraseña vacía"
+            return false
+        }else{
+            return true
         }
+    }
 
+    private fun validateTermsConditions(): Boolean{
         if(!cbTermsConditions.isChecked){
             tvErrorTermsConditions.visibility = View.VISIBLE
             tvErrorTermsConditions.text = "Debes seleccionar terminos y condiciones"
+            return false
+        }else{
+            return true
         }
     }
 }
